@@ -10,7 +10,7 @@
 
     <div ng-app="myApp" ng-controller="Ctrl">
 
-      <world-map world-data="worldData" value-range="valueRange" color-range="colorRange" dimension="dimension"
+      <world-map ng-if="render" world-data="worldData" value-range="valueRange" color-range="colorRange" dimension="dimension"
       map-width="mapWidth" descriptive-text="descriptiveText" country-fill-color="countryFillColor"
       country-border-color="countryBorderColor"></world-map>
 
