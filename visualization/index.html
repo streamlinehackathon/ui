@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
+    <link type="text/css" rel="stylesheet" href="angular-map-it.css"/>
+  </head>
+
+  <body>
+
+    <div ng-app="myApp" ng-controller="Ctrl">
+
+      <world-map world-data="worldData" value-range="valueRange" color-range="colorRange" dimension="dimension"
+      map-width="mapWidth" descriptive-text="descriptiveText" country-fill-color="countryFillColor"
+      country-border-color="countryBorderColor"></world-map>
+
+    </div>
+
+    <script data-require="angular.js@1.4.x" src="https://code.angularjs.org/1.4.1/angular.js" data-semver="1.4.1"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script type="text/javascript" src="angular-map-it.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+
+  </body>
+
+</html>
