@@ -56,7 +56,7 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
     $scope.sendTopic = function () {
 
-        $http.get('http://localhost:5984/event_code_' + $scope.topicInput + '/_all_docs?include_docs=true').success(function(data)
+        $http.get('http://localhost:5984/events_' + $scope.topicInput + '/_all_docs?include_docs=true').success(function(data)
         {
             $scope.allDataOfOneEvent = data['rows'];
             $scope.dataEventCounter = data['rows'].length - 1;
@@ -76,7 +76,7 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
 
     // Trending topics
-    $http.get('http://localhost:5984/all_topics/_all_docs?include_docs=true').success(function(data)
+    $http.get('http://localhost:5984/trending_topics/_all_docs?include_docs=true').success(function(data)
     {
         $scope.allTrendingTopicsAllDays = data['rows'];
 
