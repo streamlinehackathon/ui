@@ -2,47 +2,63 @@ parameterName  = "event";
 parameterValue = "";
 
 location.search.substr(1).split("&").forEach(function (item)
-	{
-		tmp = item.split("=");
+{
+    tmp = item.split("=");
 
-		if (tmp[0] === parameterName)
-		{
-			parameterValue = decodeURIComponent(tmp[1]);
-		}
-	});
+    if (tmp[0] === parameterName)
+    {
+        parameterValue = decodeURIComponent(tmp[1]);
+    }
+});
 
 var myApp = angular.module('myApp', ['angular-maps']);
 
 myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
-	{
+{
 
-		$scope.map = true;
+    // Map operations
+    $scope.map = true;
 
-		$scope.switchMap = function() {
-			$scope.map = !$scope.map;
-		}
+    $scope.switchMap = function() {
+        $scope.map = !$scope.map;
+    };
 
-		$scope.render = true;
+    $scope.render = true;
 
-		$http.get('http://localhost:5984/testdb/e83f2c41ef59980f21f3e4ba3c000df1').success(function(data)
-			{
-				$scope.worldData = data["countries"];
-				$scope.render = false;
+    $http.get('http://localhost:5984/testdb/e83f2c41ef59980f21f3e4ba3c000df1').success(function(data)
+    {
+        $scope.worldData = data["countries"];
+        $scope.render = false;
 
-				setTimeout(function() {
-					$scope.$apply(function () {
-						$scope.render = true;
-					});
-				}, 200);
-			});
+        setTimeout(function() {
+            $scope.$apply(function () {
+                $scope.render = true;
+            });
+        }, 200);
+    });
 
-		$scope.valueRange = [0,100];
-		$scope.colorRange = ["#F03B20", "#FFEDA0"];
-		$scope.dimension = 600;
-		$scope.mapWidth = 900;
-		$scope.descriptiveText = '';
-		$scope.countryFillColor = "#aaa";
-		$scope.countryBorderColor = "#fff";
-		$scope.worldData = [];
+    $scope.valueRange = [0,100];
+    $scope.colorRange = ["#F03B20", "#FFEDA0"];
+    $scope.dimension = 600;
+    $scope.mapWidth = 900;
+    $scope.descriptiveText = '';
+    $scope.countryFillColor = "#aaa";
+    $scope.countryBorderColor = "#fff";
+    $scope.worldData = [];
 
-	}]);
+    // Enter an event
+    $scope.topicInput = "";
+
+
+    $scope.sendTopic = function () {
+        // Update topic
+        console.log($scope.topicInput);
+    };
+
+    $scope.possibleEvents = ["Type 1", "Type 2", "Type 3"];
+
+
+    // Trending topics
+    $scope.allTrendingTopics = ["Topic one", "Topic two", "Topic three"];
+
+}]);
