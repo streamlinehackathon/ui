@@ -16,6 +16,12 @@ var myApp = angular.module('myApp', ['angular-maps']);
 myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 {
 
+    $scope.allDataOfOneEvent = [];
+    $scope.dataEventCounter = 0;
+    $scope.currentData = {};
+
+
+
     // Map operations
     $scope.map = true;
 
@@ -25,19 +31,29 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
     $scope.render = true;
 
-    $http.get('http://localhost:5984/testdb/e83f2c41ef59980f21f3e4ba3c000df1').success(function(data)
+    $http.get('http://localhost:5984/event_code_020/_all_docs?include_docs=true').success(function(data)
     {
-        $scope.worldData = data["countries"];
-        $scope.render = false;
+        $scope.allDataOfOneEvent = data['rows'];
+        $scope.dataEventCounter = data['rows'].length - 1;
 
+        // $scope.worldData = data['rows'][0]['doc']["countries"];
+        $scope.worldData = data['rows'][$scope.dataEventCounter]['doc']["countries"];
+        $scope.currentData = data['rows'][$scope.dataEventCounter]['doc'];
+
+        $scope.doRerender();
+
+    });
+
+    $scope.doRerender = function() {
+        $scope.render = false;
         setTimeout(function() {
             $scope.$apply(function () {
                 $scope.render = true;
             });
         }, 200);
-    });
+    }
 
-    $scope.valueRange = [0,100];
+    $scope.valueRange = [-5,5];
     $scope.colorRange = ["#F03B20", "#FFEDA0"];
     $scope.dimension = 600;
     $scope.mapWidth = 900;
@@ -60,5 +76,26 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
     // Trending topics
     $scope.allTrendingTopics = ["Topic one", "Topic two", "Topic three"];
+
+    // Date picker
+    $scope.before = function() {
+        if ($scope.dataEventCounter > 0) {
+            $scope.dataEventCounter = $scope.dataEventCounter - 1;
+            $scope.worldData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc']["countries"];
+            $scope.currentData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc'];
+
+            $scope.doRerender();
+        }
+    };
+
+    $scope.next = function() {
+        if ($scope.dataEventCounter < $scope.allDataOfOneEvent.length - 1) {
+            $scope.dataEventCounter = $scope.dataEventCounter + 1;
+            $scope.worldData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc']["countries"];
+            $scope.currentData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc'];
+            $scope.doRerender();
+        }
+
+    };
 
 }]);
