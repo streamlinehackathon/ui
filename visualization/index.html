@@ -69,21 +69,7 @@
 
 
         <div class="demo-cards mdl-cell mdl-cell--4-col mdl-cell--8-col-tablet mdl-grid mdl-grid--no-spacing">
-          <div style="max-height: 180px;" class="demo-updates  mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
-            <div style="padding-bottom: 0px;" class="mdl-card__supporting-text mdl-color-text--grey-600">
-              <div class="mdl-textfield mdl-js-textfield">
-                <button ng-click="before()" ng-if="map" class="mdl-button mdl-js-button mdl-button--icon">
-                  <i class="material-icons">navigate_before</i>
-                </button>
-                {{currentData.date}}
-                <button ng-click="next()" ng-if="map" class="mdl-button mdl-js-button mdl-button--icon">
-                  <i class="material-icons">navigate_next</i>
-                </button>
-              </div>
-            </div>
-          </div>
 
-          <div class="demo-separator mdl-cell--1-col"></div>
           <!--<div class="demo-cards mdl-cell mdl-cell&#45;&#45;4-col mdl-cell&#45;&#45;8-col-tablet mdl-grid mdl-grid&#45;&#45;no-spacing">-->
           <div style="max-height: 180px;" class="demo-updates mdl-card mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
             <div style="color: white;" class="mdl-card__title mdl-color--teal-300">
@@ -102,6 +88,27 @@
               </form>
             </div>
           </div>
+          <div class="demo-separator mdl-cell--1-col"></div>
+
+                    <div style="max-height: 180px;" class="demo-updates  mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--4-col-tablet mdl-cell--12-col-desktop">
+            <div style="padding-bottom: 0px;" class="mdl-card__supporting-text mdl-color-text--grey-600">
+              <!--<div class="mdl-textfield mdl-js-textfield">-->
+              <div class="mdl-cell mdl-cell--4-col">
+                {{currentData.date}}
+              </div>
+
+              <div class="mdl-cell mdl-cell--4-col">
+                <button ng-click="before()"  class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">navigate_before</i>
+                </button>
+                <button ng-click="next()" class="mdl-button mdl-js-button mdl-button--icon">
+                  <i class="material-icons">navigate_next</i>
+                </button>
+              </div>
+             <!--</div>-->
+            </div>
+          </div>
+
           <div class="demo-separator mdl-cell--1-col"></div>
           <div class="demo-options mdl-card mdl-color--deep-purple-500 mdl-shadow--2dp mdl-cell mdl-cell--4-col mdl-cell--3-col-tablet mdl-cell--12-col-desktop">
             <div class="mdl-card__supporting-text mdl-color-text--blue-grey-50">

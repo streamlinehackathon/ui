@@ -31,18 +31,6 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
     $scope.render = true;
 
-    $http.get('http://localhost:5984/event_code_020/_all_docs?include_docs=true').success(function(data)
-    {
-        $scope.allDataOfOneEvent = data['rows'];
-        $scope.dataEventCounter = data['rows'].length - 1;
-
-        // $scope.worldData = data['rows'][0]['doc']["countries"];
-        $scope.worldData = data['rows'][$scope.dataEventCounter]['doc']["countries"];
-        $scope.currentData = data['rows'][$scope.dataEventCounter]['doc'];
-
-        $scope.doRerender();
-
-    });
 
     $scope.doRerender = function() {
         $scope.render = false;
@@ -67,6 +55,19 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
 
     $scope.sendTopic = function () {
+
+        $http.get('http://localhost:5984/event_code_' + $scope.topicInput + '/_all_docs?include_docs=true').success(function(data)
+        {
+            $scope.allDataOfOneEvent = data['rows'];
+            $scope.dataEventCounter = data['rows'].length - 1;
+
+            // $scope.worldData = data['rows'][0]['doc']["countries"];
+            $scope.worldData = data['rows'][$scope.dataEventCounter]['doc']["countries"];
+            $scope.currentData = data['rows'][$scope.dataEventCounter]['doc'];
+
+            $scope.doRerender();
+
+        });
         // Update topic
         console.log($scope.topicInput);
     };
@@ -75,7 +76,35 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
 
 
     // Trending topics
-    $scope.allTrendingTopics = ["Topic one", "Topic two", "Topic three"];
+    $http.get('http://localhost:5984/all_topics/_all_docs?include_docs=true').success(function(data)
+    {
+        $scope.allTrendingTopicsAllDays = data['rows'];
+
+        tmpTopic = data['rows'][$scope.allTrendingTopicsAllDays.length - 1]['doc']['topics'];
+        $scope.setTopic(tmpTopic)
+
+    });
+    $scope.allTrendingTopicsAllDays = [];
+    // $scope.allTrendingTopics = ["Topic one", "Topic two", "Topic three"];
+
+
+    $scope.setTopic = function(topic) {
+        $scope.allTrendingTopics = [];
+        for (i = 0; i < topic .length; i++) {
+            $scope.allTrendingTopics.push(topic[i]['value']);
+
+        }
+    };
+
+    $scope.getTopicByDay = function(day) {
+     $scope.allTrendingTopicsAllDays.forEach(function (topicday) {
+         if (topicday['doc']['date'] == day) {
+             $scope.setTopic(topicday['doc']['topics'])
+         }
+
+     })
+
+    };
 
     // Date picker
     $scope.before = function() {
@@ -83,6 +112,8 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
             $scope.dataEventCounter = $scope.dataEventCounter - 1;
             $scope.worldData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc']["countries"];
             $scope.currentData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc'];
+
+            $scope.getTopicByDay($scope.currentData['date']);
 
             $scope.doRerender();
         }
@@ -93,9 +124,10 @@ myApp.controller('Ctrl', ['$scope', '$http', function($scope, $http)
             $scope.dataEventCounter = $scope.dataEventCounter + 1;
             $scope.worldData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc']["countries"];
             $scope.currentData = $scope.allDataOfOneEvent[$scope.dataEventCounter]['doc'];
+
+            $scope.getTopicByDay($scope.currentData['date']);
             $scope.doRerender();
         }
-
     };
 
 }]);
